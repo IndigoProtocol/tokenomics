@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.4
+
+      - name: Install dependencies
+        run: |
+          pip install .
+          pip install -r requirements-dev.txt
+
+      - name: Check imports are sorted
+        run: isort -c .
+
+      - name: Check code is formatted
+        run: black --check .
+
+      - name: Check code passes lint
+        run: flake8 .
+
+      - name: Check static typing
+        run: mypy .
+
+      - name: Check tests pass
+        run: pytest .

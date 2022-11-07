@@ -1,0 +1,6 @@
+*__pycache__
+.mypy_cache
+.pytest_cache
+build
+indy_tokenomics.egg-info
+venv
